@@ -11,11 +11,11 @@ import { ApiList } from "@/components/ui/api-list";
 
 import { columns, BlogColumn } from "./columns";
 
-interface BillboardClientProps {
+interface BlogClientProps {
     data: BlogColumn[];
 }
 
-export const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
+export const BlogClient: React.FC<BlogClientProps> = ({ data }) => {
     const params = useParams();
     const router = useRouter();
 

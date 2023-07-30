@@ -2,7 +2,7 @@ import { format } from "date-fns";
 
 import prismadb from "@/lib/prismadb";
 
-import { BillboardClient } from "./components/client";
+import { BlogClient } from "./components/client";
 import { BlogColumn } from "./components/columns";
 
 const BlogsPage = async ({ params }: { params: { storeId: string } }) => {
@@ -26,7 +26,7 @@ const BlogsPage = async ({ params }: { params: { storeId: string } }) => {
     return (
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8 pt-6">
-                <BillboardClient data={formattedBlogs} />
+                <BlogClient data={formattedBlogs} />
             </div>
         </div>
     );

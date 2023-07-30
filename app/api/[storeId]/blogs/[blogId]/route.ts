@@ -67,7 +67,7 @@ export async function PATCH(req: Request, { params }: { params: { blogId: string
 
         if (!imageUrl) return new NextResponse("Image URL is required", { status: 400 });
 
-        if (!params.blogId) return new NextResponse("Billboard id is required", { status: 400 });
+        if (!params.blogId) return new NextResponse("Blog id is required", { status: 400 });
 
         const storeByUserId = await prismadb.store.findFirst({
             where: {
