@@ -1,35 +1,35 @@
-import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
-import { NextPage } from "next";
+import { format } from "date-fns";
 
 import prismadb from "@/lib/prismadb";
-import { SettingsForm } from "./components/settings-form";
 
-interface SettingsPageProps {
-    params: { storeId: string }
-}
+import { BillboardClient } from "./components/client";
+import { BlogColumn } from "./components/columns";
 
-const SettingsPage: NextPage<SettingsPageProps> = async ({ params }) => {
-    const { userId } = auth();
+const BlogsPage = async ({ params }: { params: { storeId: string } }) => {
 
-    if (!userId) redirect('/sign-in')
-
-    const store = await prismadb.store.findFirst({
+    const blogs = await prismadb.blog.findMany({
         where: {
-            id: params.storeId,
-            userId
+            storeId: params.storeId
+        },
+        orderBy: {
+            createdAt: 'desc'
         }
     });
 
-    if (!store) redirect('/');
+    const formattedBlogs: BlogColumn[] = blogs.map((item) => ({
+        id: item.id,
+        title: item.title,
+        author: item.author,
+        createdAt: format(item.createdAt, 'MMMM do, yyyy, hh:mm a'), // hh:mm:ss a dd/LL/yyyy O
+    }));
 
     return (
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8 pt-6">
-                <SettingsForm initialData={store} />
+                <BillboardClient data={formattedBlogs} />
             </div>
         </div>
     );
-}
+};
 
-export default SettingsPage;
+export default BlogsPage;
