@@ -24,11 +24,13 @@ import { Heading } from "@/components/ui/heading"
 import ImageUpload from "@/components/ui/image-upload"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
+import { Textarea } from "@/components/ui/textarea"
 
 const formSchema = z.object({
     title: z.string().min(1),
     author: z.string().min(1),
     imageUrl: z.string().min(1),
+    content: z.string().min(50),
 });
 
 type BlogFormValues = z.infer<typeof formSchema>
@@ -55,6 +57,7 @@ export const BlogForm: React.FC<BlogFormProps> = ({ initialData }) => {
             title: '',
             imageUrl: '',
             author: '',
+            content: '',
         }
     });
 
@@ -171,6 +174,27 @@ export const BlogForm: React.FC<BlogFormProps> = ({ initialData }) => {
                             )}
                         />
                     </div>
+
+                    <div className="md:grid md:grid-cols-2 gap-8">
+                        <FormField
+                            control={form.control}
+                            name="content"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Content</FormLabel>
+                                    <FormControl>
+                                        <Textarea
+                                            disabled={loading}
+                                            placeholder="Write your blog content here"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+
                     <Button disabled={loading} className="ml-auto" type="submit">
                         {action}
                     </Button>

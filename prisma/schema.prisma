@@ -27,7 +27,7 @@ model Blog {
   store    Store  @relation("StoreToBlog", fields: [storeId], references: [id])
   title    String
   // subtitle String
-  // content  String
+  content  String
   author   String
   imageUrl String
 

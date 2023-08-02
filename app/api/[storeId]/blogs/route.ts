@@ -9,11 +9,13 @@ export async function POST(req: Request, { params }: { params: { storeId: string
 
         const body = await req.json();
 
-        const { title, author, imageUrl } = body;
+        const { title, author, imageUrl, content } = body;
 
         if (!userId) return new NextResponse("Unauthenticated", { status: 403 });
 
         if (!title) return new NextResponse("Title is required", { status: 400 });
+
+        if (!content) return new NextResponse("Content is required", { status: 400 });
 
         if (!author) return new NextResponse("Author is required", { status: 400 });
 
@@ -35,6 +37,7 @@ export async function POST(req: Request, { params }: { params: { storeId: string
             data: {
                 title,
                 author,
+                content,
                 imageUrl,
                 storeId: params.storeId,
             }
