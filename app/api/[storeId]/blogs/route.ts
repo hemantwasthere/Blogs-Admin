@@ -9,7 +9,7 @@ export async function POST(req: Request, { params }: { params: { storeId: string
 
         const body = await req.json();
 
-        const { title, author, imageUrl, content } = body;
+        const { title, author, imageUrl, content, isFeatured } = body;
 
         if (!userId) return new NextResponse("Unauthenticated", { status: 403 });
 
@@ -39,6 +39,7 @@ export async function POST(req: Request, { params }: { params: { storeId: string
                 author,
                 content,
                 imageUrl,
+                isFeatured,
                 storeId: params.storeId,
             }
         });
@@ -52,11 +53,18 @@ export async function POST(req: Request, { params }: { params: { storeId: string
 
 export async function GET(req: Request, { params }: { params: { storeId: string } }) {
     try {
+        const { searchParams } = new URL(req.url)
+        const isFeatured = searchParams.get('isFeatured');
+
         if (!params.storeId) return new NextResponse("Store id is required", { status: 400 });
 
         const blogs = await prismadb.blog.findMany({
             where: {
-                storeId: params.storeId
+                storeId: params.storeId,
+                isFeatured: isFeatured ? true : undefined,
+            },
+            orderBy: {
+                createdAt: 'desc',
             }
         });
 

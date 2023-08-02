@@ -22,14 +22,15 @@ model Store {
 }
 
 model Blog {
-  id       String @id @default(uuid())
-  storeId  String
-  store    Store  @relation("StoreToBlog", fields: [storeId], references: [id])
-  title    String
+  id         String  @id @default(uuid())
+  storeId    String
+  store      Store   @relation("StoreToBlog", fields: [storeId], references: [id])
+  title      String
   // subtitle String
-  content  String
-  author   String
-  imageUrl String
+  content    String
+  author     String
+  imageUrl   String
+  isFeatured Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

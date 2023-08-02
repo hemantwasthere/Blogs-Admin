@@ -57,7 +57,7 @@ export async function PATCH(req: Request, { params }: { params: { blogId: string
 
         const body = await req.json();
 
-        const { title, author, imageUrl, content } = body;
+        const { title, author, imageUrl, content, isFeatured } = body;
 
         if (!userId) return new NextResponse("Unauthenticated", { status: 403 });
 
@@ -88,7 +88,8 @@ export async function PATCH(req: Request, { params }: { params: { blogId: string
                 title,
                 author,
                 content,
-                imageUrl
+                imageUrl,
+                isFeatured
             }
         });
 

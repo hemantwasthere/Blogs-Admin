@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -25,12 +26,14 @@ import ImageUpload from "@/components/ui/image-upload"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
+import { Checkbox } from "@/components/ui/checkbox"
 
 const formSchema = z.object({
     title: z.string().min(1),
     author: z.string().min(1),
     imageUrl: z.string().min(1),
     content: z.string().min(50),
+    isFeatured: z.boolean().default(false).optional(),
 });
 
 type BlogFormValues = z.infer<typeof formSchema>
@@ -58,6 +61,7 @@ export const BlogForm: React.FC<BlogFormProps> = ({ initialData }) => {
             imageUrl: '',
             author: '',
             content: '',
+            isFeatured: false,
         }
     });
 
@@ -170,6 +174,30 @@ export const BlogForm: React.FC<BlogFormProps> = ({ initialData }) => {
                                         />
                                     </FormControl>
                                     <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="isFeatured"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                                    <FormControl>
+                                        <Checkbox
+                                            checked={field.value}
+                                            // @ts-ignore
+                                            onCheckedChange={field.onChange}
+                                        />
+                                    </FormControl>
+                                    <div className="space-y-1 leading-none">
+                                        <FormLabel>
+                                            Featured
+                                        </FormLabel>
+                                        <FormDescription>
+                                            This product will appear on the home page
+                                        </FormDescription>
+                                    </div>
                                 </FormItem>
                             )}
                         />
