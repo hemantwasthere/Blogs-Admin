@@ -58,15 +58,28 @@ export async function GET(req: Request, { params }: { params: { storeId: string 
 
         if (!params.storeId) return new NextResponse("Store id is required", { status: 400 });
 
-        const blogs = await prismadb.blog.findMany({
-            where: {
-                storeId: params.storeId,
-                isFeatured: isFeatured ? true : undefined,
-            },
-            orderBy: {
-                createdAt: 'desc',
-            }
-        });
+        let blogs;
+
+        if (isFeatured) {
+            blogs = await prismadb.blog.findMany({
+                where: {
+                    storeId: params.storeId,
+                    isFeatured: isFeatured === 'true' ? true : false,
+                },
+                orderBy: {
+                    createdAt: 'desc',
+                }
+            });
+        } else {
+            blogs = await prismadb.blog.findMany({
+                where: {
+                    storeId: params.storeId,
+                },
+                orderBy: {
+                    createdAt: 'desc',
+                }
+            });
+        }
 
         return NextResponse.json(blogs);
     } catch (error) {

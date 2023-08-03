@@ -10,6 +10,7 @@ export type BlogColumn = {
     id: string
     title: string
     author: string
+    isFeatured: boolean
     createdAt: string;
 }
 
@@ -21,6 +22,10 @@ export const columns: ColumnDef<BlogColumn>[] = [
     {
         accessorKey: "author",
         header: "Author",
+    },
+    {
+        accessorKey: "isFeatured",
+        header: "Featured",
     },
     {
         accessorKey: "createdAt",

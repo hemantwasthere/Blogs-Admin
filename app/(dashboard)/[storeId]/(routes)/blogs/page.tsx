@@ -20,6 +20,7 @@ const BlogsPage = async ({ params }: { params: { storeId: string } }) => {
         id: item.id,
         title: item.title,
         author: item.author,
+        isFeatured: item.isFeatured,
         createdAt: format(item.createdAt, 'MMMM do, yyyy, hh:mm a'), // hh:mm:ss a dd/LL/yyyy O
     }));
 
